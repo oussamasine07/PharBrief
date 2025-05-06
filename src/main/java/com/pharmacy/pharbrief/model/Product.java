@@ -3,6 +3,8 @@ package com.pharmacy.pharbrief.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Product {
@@ -10,9 +12,13 @@ public class Product {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private String name;
+    @NotNull
     private String description;
+    @Min(0)
     private double price;
+    @Min(0)
     private int quantity;
 
     public Long getId() {
