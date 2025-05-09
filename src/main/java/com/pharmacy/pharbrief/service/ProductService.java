@@ -2,6 +2,7 @@ package com.pharmacy.pharbrief.service;
 
 import com.pharmacy.pharbrief.dto.ProductDTO;
 import com.pharmacy.pharbrief.mapper.ProductDTOMapper;
+import com.pharmacy.pharbrief.mapper.ProductMapper;
 import com.pharmacy.pharbrief.model.Product;
 import com.pharmacy.pharbrief.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,25 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductDTOMapper productDTOMapper;
+    private final ProductMapper productMapper;
 
     @Autowired
-    public ProductService (final ProductRepository productRepository, final ProductDTOMapper productDTOMapper) {
+    public ProductService (
+            final ProductRepository productRepository,
+            final ProductDTOMapper productDTOMapper,
+            final ProductMapper productMapper
+    ) {
         this.productRepository = productRepository;
         this.productDTOMapper = productDTOMapper;
+        this.productMapper = productMapper;
     }
 
     public List<ProductDTO> getAllProducts () {
         return productRepository.findAll()
                 .stream()
-                .map(productDTOMapper)
+                //.map(productDTOMapper)
+                //.map(product -> productMapper.toDTO(product))
+                .map(productMapper::toDTO)// METHOD REFERENCE
                 .collect(Collectors.toList());
     }
 
