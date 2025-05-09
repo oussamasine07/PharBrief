@@ -1,5 +1,6 @@
 package com.pharmacy.pharbrief.service;
 
+import com.pharmacy.pharbrief.dto.ProductDTO;
 import com.pharmacy.pharbrief.model.Product;
 import com.pharmacy.pharbrief.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -17,8 +19,14 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts () {
-        return productRepository.findAll();
+    public List<ProductDTO> getAllProducts () {
+        return productRepository.findAll()
+                .stream()
+                .map(product -> new ProductDTO(
+                        product.getName(),
+                        product.getPrice()
+                ))
+                .collect(Collectors.toList());
     }
 
     public Optional<Product> getProdcutById (Long id) {

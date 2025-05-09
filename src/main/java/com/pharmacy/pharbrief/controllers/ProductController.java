@@ -1,5 +1,6 @@
 package com.pharmacy.pharbrief.controllers;
 
+import com.pharmacy.pharbrief.dto.ProductDTO;
 import com.pharmacy.pharbrief.model.Product;
 import com.pharmacy.pharbrief.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllTasks () {
+    public List<ProductDTO> getAllTasks () {
         return productService.getAllProducts();
     }
 
