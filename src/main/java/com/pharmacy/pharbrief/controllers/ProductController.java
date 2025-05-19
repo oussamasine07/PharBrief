@@ -44,4 +44,9 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
+    @GetMapping("/count/{price}")
+    public int countPriceProducts (@PathVariable Integer price) {
+        return productService.countProducts(price);
+    }
+
 }

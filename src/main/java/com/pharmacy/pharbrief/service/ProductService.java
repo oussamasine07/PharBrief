@@ -61,6 +61,10 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public int countProducts (double price) {
+        return productRepository.countProductByPrice(price);
+    }
+
 }
 
 
