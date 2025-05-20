@@ -7,6 +7,7 @@ import com.pharmacy.pharbrief.model.Product;
 import com.pharmacy.pharbrief.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.ResourceTransactionManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +23,7 @@ public class ProductService {
     public ProductService (
             final ProductRepository productRepository,
             final ProductDTOMapper productDTOMapper,
-            final ProductMapper productMapper
-    ) {
+            final ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.productDTOMapper = productDTOMapper;
         this.productMapper = productMapper;
@@ -40,6 +40,13 @@ public class ProductService {
 
     public Optional<Product> getProdcutById (Long id) {
         return productRepository.findById(id);
+    }
+
+    public List<Product> getPriceGreater(double priceG){
+        return productRepository.getProductsByPriceGreaterThan(priceG);
+    }
+    public List<Product> getProductsWithQunatityLessThan(int quantity){
+        return productRepository.findProductsWithQunatityLessThan(quantity);
     }
 
     public Product createProduct (Product product) {
@@ -61,9 +68,18 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public int countProducts (double price) {
-        return productRepository.countProductByPrice(price);
-    }
+//    public List<Product> getquanityInferieur(int quantity){
+//        return productRepository.findByQuantityLessThan(quantity);
+//    }
+
+
+//    public int countProducts (double price) {
+//        return productRepository.countProductByPrice(price);
+//    }
+//
+//    public Product findProductByName ( String name ) {
+//        return productRepository.findProductByName(name);
+//    }
 
 }
 
