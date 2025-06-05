@@ -1,13 +1,21 @@
 package com.pharmacy.pharbrief.controllers;
 
 import com.pharmacy.pharbrief.dto.ProductDTO;
+import com.pharmacy.pharbrief.exception.ResourceNotFoundException;
 import com.pharmacy.pharbrief.model.Product;
 import com.pharmacy.pharbrief.repository.ProductRepository;
 import com.pharmacy.pharbrief.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -27,12 +35,16 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return productService.getProdcutById(id).orElseThrow();
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        Product foundProduct =  productService.getProdcutById(id).orElseThrow(
+                () -> new ResourceNotFoundException("this product is not found")
+        );
+        return ResponseEntity.ok( foundProduct );
     }
 
     @PostMapping
-    public Product create(@RequestBody Product product) {
+    public Product create(@Valid @RequestBody Product product) {
+
         return productService.createProduct(product);
     }
 
@@ -74,4 +86,23 @@ public class ProductController {
 
         return productService.getProductsWithQunatityLessThan(quantity);
     }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

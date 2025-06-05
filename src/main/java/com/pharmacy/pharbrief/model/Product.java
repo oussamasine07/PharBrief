@@ -3,8 +3,7 @@ package com.pharmacy.pharbrief.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Product {
@@ -12,13 +11,18 @@ public class Product {
     @GeneratedValue
     private Long id;
 
-    @NotNull
+    @NotBlank(message = "name is required")
+    @Size(min = 5, message = "name must be at least 5 charachters")
     private String name;
-    @NotNull
+
+    @NotBlank(message = "description is required")
+    @Size(min = 5, message = "description must be at least 5 charachters")
     private String description;
-    @Min(0)
+
+    @Positive(message = "price can not be negative value")
     private double price;
-    @Min(0)
+
+    @Positive(message = "quantity can not be negative value")
     private int quantity;
 
     public Long getId() {
