@@ -1,5 +1,6 @@
 package com.pharmacy.pharbrief.model;
 
+import com.pharmacy.pharbrief.validation.ValidatProductType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,6 +25,10 @@ public class Product {
 
     @Positive(message = "quantity can not be negative value")
     private int quantity;
+
+    @NotNull(message = "product type is required")
+    @ValidatProductType
+    private ProductType productType;
 
     public Long getId() {
         return id;
@@ -63,5 +68,25 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public ProductType getProductType() {
+        return this.productType;
+    }
+
+    public void setProductType ( ProductType productType ) {
+        this.productType = productType;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", productType=" + productType +
+                '}';
     }
 }
